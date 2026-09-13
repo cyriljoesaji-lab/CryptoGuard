@@ -621,4 +621,47 @@ http://127.0.0.1:8000/docs
 ```
 
 The Swagger interface can be used to inspect request parameters, send requests, and view API responses.
+## 🧪 Testing & Validation
+
+CryptoGuard includes automated security tests covering its core cryptographic mechanisms and tampering detection capabilities.
+
+### Security Test Results
+
+| Test                                  | Result |
+| ------------------------------------- | ------ |
+| AES-256-GCM Encryption & Decryption   | ✅ PASS |
+| AES Tampering Detection               | ✅ PASS |
+| HMAC Integrity Verification           | ✅ PASS |
+| HMAC Tampering Detection              | ✅ PASS |
+| ECC Digital Signature Verification    | ✅ PASS |
+| Digital Signature Tampering Detection | ✅ PASS |
+
+### Test Summary
+
+**6/6 security tests passed successfully.**
+
+The test suite validates:
+
+* Successful AES-256-GCM encryption and decryption
+* Detection of modified encrypted data
+* HMAC integrity verification
+* Rejection of modified HMAC-protected data
+* ECC digital signature verification
+* Detection of modified or invalid digital signatures
+
+### Running the Tests
+
+From the project root:
+
+```bash
+python -m tests.test_security
+```
+
+Expected output includes:
+
+```text
+Security Testing Complete
+```
+
+All tests are currently passing in the development environment.
 
