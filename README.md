@@ -1,50 +1,400 @@
-\# CryptoGuard
+\# 🛡️ CryptoGuard
 
 
 
-CryptoGuard is a cybersecurity tool designed to detect potentially sensitive
-
-credentials and high-risk information using configurable security rules.
+\*\*AI-Assisted Cryptographic Security \& Sensitive Data Protection Platform\*\*
 
 
 
-\## Project Status
+CryptoGuard is a security-focused application designed to provide cryptographic protection, key management, security monitoring, and configurable risk detection through a unified web-based platform.
 
 
 
-🚧 Under Development
+\## 🚀 Overview
 
 
 
-\## Features
+CryptoGuard combines modern cryptographic mechanisms with security monitoring and automated analysis to help protect sensitive information and provide visibility into security-related events.
 
 
 
-\- Sensitive keyword detection
-
-\- Password-related keyword detection
-
-\- Default security rules
-
-\- User-defined custom keywords
-
-\- Risk classification
-
-\- REST API
-
-\- Automated testing
+The platform includes:
 
 
 
-\## Technologies
+\* AES-based encryption
+
+\* ECC cryptographic operations
+
+\* HMAC-based integrity protection
+
+\* Cryptographic key management
+
+\* Key rotation and revocation
+
+\* Security policy enforcement
+
+\* Security monitoring
+
+\* AI-assisted security analysis
+
+\* Database-backed logging
+
+\* REST API
+
+\* Web-based dashboard
+
+\* Automated security testing
 
 
 
-\- Python
+\## ✨ Key Features
 
-\- FastAPI
 
-\- Uvicorn
+
+\### 🔐 Cryptography
+
+
+
+\* AES encryption engine
+
+\* Elliptic Curve Cryptography (ECC)
+
+\* HMAC integrity protection
+
+\* Centralized cryptographic policy
+
+\* Secure key management
+
+
+
+\### 🔑 Key Management
+
+
+
+CryptoGuard provides API-based key management capabilities including:
+
+
+
+\* Key creation/access
+
+\* Key inspection
+
+\* Key rotation
+
+\* Key revocation
+
+
+
+\### 🛡️ Security Monitoring
+
+
+
+The monitoring component records and analyzes security-related events to provide visibility into application activity.
+
+
+
+\### 🤖 AI-Assisted Security
+
+
+
+CryptoGuard includes an AI agent designed to assist with security analysis and risk identification.
+
+
+
+\### 🌐 Web API
+
+
+
+The backend is implemented using \*\*FastAPI\*\* and exposes REST endpoints for encryption, logs, and cryptographic key management.
+
+
+
+\## 🏗️ Project Structure
+
+
+
+```text
+
+CryptoGuard/
+
+│
+
+├── backend/
+
+│   ├── ai\_agent.py
+
+│   ├── database.py
+
+│   ├── main.py
+
+│   └── monitor\_agent.py
+
+│
+
+├── crypto/
+
+│   ├── aes\_engine.py
+
+│   ├── crypto\_policy.py
+
+│   ├── ecc\_engine.py
+
+│   ├── hmac\_engine.py
+
+│   └── key\_manager.py
+
+│
+
+├── frontend/
+
+│   └── index.html
+
+│
+
+├── tests/
+
+│   └── test\_security.py
+
+│
+
+├── requirements.txt
+
+├── README.md
+
+└── .gitignore
+
+```
+
+
+
+\## 🧰 Technology Stack
+
+
+
+| Component       | Technology                  |
+
+| --------------- | --------------------------- |
+
+| Backend         | Python                      |
+
+| API Framework   | FastAPI                     |
+
+| Server          | Uvicorn                     |
+
+| Cryptography    | Python Cryptography Library |
+
+| Data Validation | Pydantic                    |
+
+| Frontend        | HTML                        |
+
+| Testing         | Python                      |
+
+| Database        | SQLite                      |
+
+
+
+\## 📡 API Endpoints
+
+
+
+\### General
+
+
+
+| Method | Endpoint     | Purpose             |
+
+| ------ | ------------ | ------------------- |
+
+| GET    | `/`          | Application root    |
+
+| GET    | `/dashboard` | Dashboard interface |
+
+
+
+\### Encryption
+
+
+
+| Method | Endpoint   | Purpose               |
+
+| ------ | ---------- | --------------------- |
+
+| POST   | `/encrypt` | Encrypt supplied data |
+
+
+
+\### Security Logs
+
+
+
+| Method | Endpoint | Purpose                            |
+
+| ------ | -------- | ---------------------------------- |
+
+| GET    | `/logs`  | Retrieve security/application logs |
+
+
+
+\### Key Management
+
+
+
+| Method | Endpoint                | Purpose                                   |
+
+| ------ | ----------------------- | ----------------------------------------- |
+
+| GET    | `/keys`                 | List available keys                       |
+
+| GET    | `/keys/{key\_id}`        | Retrieve information about a specific key |
+
+| POST   | `/keys/rotate`          | Rotate a cryptographic key                |
+
+| POST   | `/keys/{key\_id}/revoke` | Revoke a specific key                     |
+
+
+
+\## 🔒 Security Methodology
+
+
+
+CryptoGuard follows a layered security approach:
+
+
+
+```text
+
+Input
+
+&#x20; │
+
+&#x20; ▼
+
+Security Analysis
+
+&#x20; │
+
+&#x20; ├── Cryptographic Protection
+
+&#x20; │
+
+&#x20; ├── Integrity Verification
+
+&#x20; │
+
+&#x20; ├── Key Management
+
+&#x20; │
+
+&#x20; ├── Security Policy
+
+&#x20; │
+
+&#x20; └── Monitoring / Analysis
+
+&#x20;         │
+
+&#x20;         ▼
+
+&#x20;    Security Result
+
+```
+
+
+
+The system separates cryptographic functionality into dedicated modules for AES, ECC, HMAC, key management, and security policies.
+
+
+
+\## 🧪 Testing
+
+
+
+Security-related functionality is tested using the project's automated test suite:
+
+
+
+```text
+
+tests/
+
+└── test\_security.py
+
+```
+
+
+
+Tests are used to validate important security functionality and help detect regressions during development.
+
+
+
+\## ⚠️ Project Status
+
+
+
+CryptoGuard is currently an active development project.
+
+
+
+Features, security policies, detection logic, and AI-assisted analysis may continue to evolve as the project develops.
+
+
+
+\## 🔮 Future Improvements
+
+
+
+Planned improvements may include:
+
+
+
+\* Advanced sensitive-data detection
+
+\* Improved contextual risk analysis
+
+\* More cryptographic policy controls
+
+\* Expanded monitoring capabilities
+
+\* Enhanced AI-assisted security analysis
+
+\* Authentication and authorization
+
+\* Role-based access control
+
+\* API security hardening
+
+\* CI/CD security testing
+
+\* Security audit logging improvements
+
+
+
+\## 👨‍💻 Author
+
+
+
+\*\*Cyril Joe Saji\*\*
+
+
+
+B.Tech Computer Science \& Engineering
+
+
+
+GitHub: \[Cyril Joe Saji](https://github.com/cyriljoesaji-lab)
+
+
+
+\## ⚠️ Disclaimer
+
+
+
+CryptoGuard is an educational and research-oriented cybersecurity project.
+
+
+
+It should be properly reviewed, tested, and hardened before being used to protect sensitive information in a production environment.
 
 
 
