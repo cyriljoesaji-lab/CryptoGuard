@@ -254,58 +254,158 @@ CryptoGuard/
 
 
 
-\## 🔒 Security Methodology
+## 🔐 Security Methodology
 
+CryptoGuard uses a layered cryptographic security model in which the protection applied to data is determined by its sensitivity level.
 
+### 1. Data Sensitivity-Based Security Policy
 
-CryptoGuard follows a layered security approach:
+CryptoGuard supports three security sensitivity levels:
 
+| Sensitivity | Encryption  | Integrity   | Signature  |
+| ----------- | ----------- | ----------- | ---------- |
+| Low         | AES-256-GCM | —           | —          |
+| Medium      | AES-256-GCM | HMAC-SHA256 | —          |
+| High        | AES-256-GCM | HMAC-SHA256 | ECC-SHA256 |
 
+All defined policies use a **256-bit AES key size**.
+
+The policy engine is implemented in:
 
 ```text
-
-Input
-
-&#x20; │
-
-&#x20; ▼
-
-Security Analysis
-
-&#x20; │
-
-&#x20; ├── Cryptographic Protection
-
-&#x20; │
-
-&#x20; ├── Integrity Verification
-
-&#x20; │
-
-&#x20; ├── Key Management
-
-&#x20; │
-
-&#x20; ├── Security Policy
-
-&#x20; │
-
-&#x20; └── Monitoring / Analysis
-
-&#x20;         │
-
-&#x20;         ▼
-
-&#x20;    Security Result
-
+crypto/crypto_policy.py
 ```
 
+### 2. Authenticated Encryption
 
+CryptoGuard uses **AES-256-GCM** as its encryption mechanism.
 
-The system separates cryptographic functionality into dedicated modules for AES, ECC, HMAC, key management, and security policies.
+AES-GCM provides authenticated encryption, allowing encrypted data to be protected against unauthorized modification while maintaining confidentiality.
 
+The AES implementation is located in:
 
+```text
+crypto/aes_engine.py
+```
 
+### 3. Integrity Protection
+
+For medium- and high-sensitivity data, CryptoGuard applies:
+
+```text
+HMAC-SHA256
+```
+
+HMAC provides an integrity and authenticity mechanism that can be used to detect unauthorized modification of protected data.
+
+### 4. Digital Signature Layer
+
+High-sensitivity data additionally specifies:
+
+```text
+ECC-SHA256
+```
+
+as its signature mechanism.
+
+This provides an additional cryptographic layer for high-sensitivity data.
+
+The ECC functionality is implemented in:
+
+```text
+crypto/ecc_engine.py
+```
+
+### 5. Cryptographic Key Management
+
+CryptoGuard includes a dedicated key-management component.
+
+The key manager supports:
+
+* Cryptographic key generation
+* Unique key identifiers
+* Key creation timestamps
+* Active key tracking
+* Key revocation
+* Key rotation
+* Key-status retrieval
+* Listing of managed keys
+
+The implementation is located in:
+
+```text
+crypto/key_manager.py
+```
+
+### 6. Key Rotation
+
+When a key rotation operation is performed, currently active keys are marked as:
+
+```text
+ROTATED
+```
+
+A new cryptographic key is then generated and registered as:
+
+```text
+ACTIVE
+```
+
+This provides a basic key-lifecycle management mechanism.
+
+### 7. Key Revocation
+
+Individual keys can be revoked through the key-management system.
+
+A revoked key receives the status:
+
+```text
+REVOKED
+```
+
+This allows CryptoGuard to maintain the lifecycle state of cryptographic keys.
+
+### 8. Security Architecture
+
+The overall security flow can be represented as:
+
+```text
+                    Data Input
+                        │
+                        ▼
+                Sensitivity Level
+                        │
+             ┌──────────┼──────────┐
+             ▼          ▼          ▼
+            LOW       MEDIUM      HIGH
+             │          │          │
+             ▼          ▼          ▼
+          AES-256     AES-256    AES-256
+             │         + HMAC     + HMAC
+             │          │         + ECC
+             └──────────┼──────────┘
+                        │
+                        ▼
+                Key Management
+                        │
+             ┌──────────┼──────────┐
+             ▼          ▼          ▼
+           Active    Rotated    Revoked
+                        │
+                        ▼
+                    Database
+```
+
+### 9. Security Design Principles
+
+CryptoGuard follows several security-oriented design principles:
+
+* **Confidentiality** through AES-256-GCM encryption
+* **Integrity protection** through HMAC-SHA256
+* **Additional cryptographic assurance** for high-sensitivity data through ECC-SHA256
+* **Key lifecycle management** through creation, rotation, and revocation
+* **Policy-based security** through sensitivity-dependent cryptographic controls
+* **Persistent key metadata** through database-backed key records
 \## 🧪 Testing
 
 
