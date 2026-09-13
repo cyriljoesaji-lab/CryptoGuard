@@ -442,3 +442,83 @@ Coming soon.
 
 \- CI/CD integration
 
+## 📖 API Documentation
+
+CryptoGuard provides a REST API through FastAPI.
+
+When the application is running, FastAPI provides interactive API documentation.
+
+### Swagger UI
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+Swagger UI allows developers to inspect available endpoints and interact with the API directly from the browser.
+
+### ReDoc
+
+```text
+http://127.0.0.1:8000/redoc
+```
+
+ReDoc provides an alternative documentation interface for the API.
+
+### Running the API
+
+Start the backend using:
+
+```bash
+uvicorn backend.main:app --reload
+```
+
+The API will normally be available at:
+
+```text
+http://127.0.0.1:8000
+```
+
+### Endpoint Overview
+
+#### `GET /`
+
+Returns the application root response.
+
+#### `GET /dashboard`
+
+Provides access to the CryptoGuard dashboard.
+
+#### `POST /encrypt`
+
+Processes data through the application's encryption functionality.
+
+#### `GET /logs`
+
+Retrieves available security/application logs.
+
+#### `GET /keys`
+
+Retrieves the available cryptographic key information.
+
+#### `GET /keys/{key_id}`
+
+Retrieves information associated with a specific key.
+
+#### `POST /keys/rotate`
+
+Triggers cryptographic key rotation.
+
+#### `POST /keys/{key_id}/revoke`
+
+Revokes a specified cryptographic key.
+
+### API Documentation Example
+
+Once the server is running, open:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+The Swagger interface can be used to inspect request parameters, send requests, and view API responses.
+
