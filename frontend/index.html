@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>CryptoGuard Security Dashboard</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: #f8fafc;
+        }
+
+        /* ==============================
+           HEADER
+        ============================== */
+
+        .header {
+            padding: 30px 20px;
+            text-align: center;
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 40px;
+        }
+
+        .header p {
+            margin-top: 10px;
+            color: #94a3b8;
+        }
+
+        .status {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 7px 15px;
+            border-radius: 20px;
+            background: #14532d;
+            color: #86efac;
+            font-size: 14px;
+        }
+
+        /* ==============================
+           CONTAINER
+        ============================== */
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 25px;
+        }
+
+        /* ==============================
+           CARDS
+        ============================== */
+
+        .card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: #60a5fa;
+        }
+
+        /* ==============================
+           INPUT
+        ============================== */
+
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 15px;
+
+            background: #020617;
+            color: white;
+
+            border: 1px solid #334155;
+            border-radius: 10px;
+
+            font-size: 16px;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        /* ==============================
+           BUTTONS
+        ============================== */
+
+        button {
+            margin-top: 15px;
+            padding: 12px 22px;
+
+            border: none;
+            border-radius: 8px;
+
+            background: #2563eb;
+            color: white;
+
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .danger {
+            background: #dc2626;
+        }
+
+        .danger:hover {
+            background: #b91c1c;
+        }
+
+        /* ==============================
+           STAT GRID
+        ============================== */
+
+        .stats {
+            display: grid;
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            background: #020617;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 18px;
+        }
+
+        .stat-title {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .stat-value {
+            margin-top: 8px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        /* ==============================
+           MAIN GRID
+        ============================== */
+
+        .grid {
+            display: grid;
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 20px;
+        }
+
+        /* ==============================
+           OUTPUT
+        ============================== */
+
+        pre {
+            white-space: pre-wrap;
+            word-break: break-word;
+
+            color: #cbd5e1;
+
+            line-height: 1.5;
+
+            min-height: 40px;
+        }
+
+        /* ==============================
+           KEY MANAGEMENT
+        ============================== */
+
+        .key-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* ==============================
+           FOOTER
+        ============================== */
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+
+            color: #64748b;
+        }
+
+        /* ==============================
+           RESPONSIVE
+        ============================== */
+
+        @media (max-width: 800px) {
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 500px) {
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 30px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================
+     HEADER
+===================================== -->
+
+<div class="header">
+
+    <h1>🛡️ CryptoGuard</h1>
+
+    <p>
+        AI-Agent-Based Intelligent Cryptographic Security System
+    </p>
+
+    <div class="status">
+        ● SYSTEM ONLINE
+    </div>
+
+</div>
+
+
+<div class="container">
+
+
+<!-- =====================================
+     SYSTEM STATS
+===================================== -->
+
+<div class="stats">
+
+    <div class="stat">
+
+        <div class="stat-title">
+            Risk Level
+        </div>
+
+        <div
+            class="stat-value"
+            id="riskValue"
+        >
+            —
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-title">
+            Risk Score
+        </div>
+
+        <div
+            class="stat-value"
+            id="scoreValue"
+        >
+            —
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-title">
+            Encryption
+        </div>
+
+        <div
+            class="stat-value"
+            id="encryptionValue"
+        >
+            —
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-title">
+            Security Events
+        </div>
+
+        <div
+            class="stat-value"
+            id="eventValue"
+        >
+            —
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================
+     DATA PROTECTION
+===================================== -->
+
+<div class="card">
+
+    <h2>🔐 Protect Your Data</h2>
+
+    <textarea
+        id="data"
+        placeholder="Enter data to analyze and protect..."
+    ></textarea>
+
+    <br>
+
+    <button onclick="protectData()">
+        🔐 Protect Data
+    </button>
+
+</div>
+
+
+<!-- =====================================
+     RESULTS
+===================================== -->
+
+<div class="grid">
+
+
+    <!-- AI -->
+
+    <div class="card">
+
+        <h2>🤖 AI Risk Analysis</h2>
+
+        <pre id="risk">
+No analysis yet.
+        </pre>
+
+    </div>
+
+
+    <!-- POLICY -->
+
+    <div class="card">
+
+        <h2>🛡️ Security Policy</h2>
+
+        <pre id="policy">
+No policy generated yet.
+        </pre>
+
+    </div>
+
+
+    <!-- ENCRYPTION -->
+
+    <div class="card">
+
+        <h2>🔐 Encryption</h2>
+
+        <pre id="encryption">
+No encryption performed yet.
+        </pre>
+
+    </div>
+
+
+    <!-- INTEGRITY -->
+
+    <div class="card">
+
+        <h2>🔎 Integrity Verification</h2>
+
+        <pre id="integrity">
+No verification performed yet.
+        </pre>
+
+    </div>
+
+
+    <!-- SIGNATURE -->
+
+    <div class="card">
+
+        <h2>✍️ Digital Signature</h2>
+
+        <pre id="signature">
+No signature generated yet.
+        </pre>
+
+    </div>
+
+
+    <!-- MONITORING -->
+
+    <div class="card">
+
+        <h2>🚨 Monitoring Agent</h2>
+
+        <pre id="monitoring">
+No monitoring result yet.
+        </pre>
+
+    </div>
+
+
+</div>
+
+
+<!-- =====================================
+     KEY MANAGEMENT
+===================================== -->
+
+<div class="card">
+
+    <h2>🔑 Key Management</h2>
+
+    <pre id="keyInfo">
+No key information loaded.
+    </pre>
+
+    <div class="key-controls">
+
+        <button onclick="loadKeys()">
+            🔄 Refresh Keys
+        </button>
+
+        <button onclick="rotateKey()">
+            🔁 Rotate Active Key
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================
+     SECURITY LOGS
+===================================== -->
+
+<div class="card">
+
+    <h2>📋 Security Event Logs</h2>
+
+    <button onclick="loadLogs()">
+        🔄 Refresh Logs
+    </button>
+
+    <pre id="logs">
+No logs loaded.
+    </pre>
+
+</div>
+
+
+</div>
+
+
+<!-- =====================================
+     FOOTER
+===================================== -->
+
+<div class="footer">
+
+    CryptoGuard • AI + Cryptographic Security
+
+</div>
+
+
+<script>
+
+
+// ==========================================
+// PROTECT DATA
+// ==========================================
+
+async function protectData() {
+
+    const data =
+        document.getElementById(
+            "data"
+        ).value;
+
+
+    if (!data.trim()) {
+
+        alert(
+            "Please enter some data."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/encrypt?data=" +
+                encodeURIComponent(data),
+                {
+                    method: "POST"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Server returned HTTP " +
+                response.status
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        // ----------------------------------
+        // RISK
+        // ----------------------------------
+
+        document.getElementById(
+            "risk"
+        ).textContent =
+
+            "Risk: " +
+            result.risk +
+
+            "\n\nScore: " +
+            result.security_policy.key_size +
+
+            "\n\nReason: " +
+            result.risk_reason;
+
+
+        // ----------------------------------
+        // POLICY
+        // ----------------------------------
+
+        document.getElementById(
+            "policy"
+        ).textContent =
+
+            JSON.stringify(
+                result.security_policy,
+                null,
+                2
+            );
+
+
+        // ----------------------------------
+        // ENCRYPTION
+        // ----------------------------------
+
+        document.getElementById(
+            "encryption"
+        ).textContent =
+
+            "Key ID:\n" +
+            result.key_id +
+
+            "\n\nAlgorithm:\n" +
+            result.algorithm +
+
+            "\n\nEncrypted:\n" +
+            result.encrypted +
+
+            "\n\nDecrypted:\n" +
+            result.decrypted;
+
+
+        // ----------------------------------
+        // INTEGRITY
+        // ----------------------------------
+
+        document.getElementById(
+            "integrity"
+        ).textContent =
+
+            "HMAC Verified: " +
+            result.hmac_verified;
+
+
+        // ----------------------------------
+        // SIGNATURE
+        // ----------------------------------
+
+        document.getElementById(
+            "signature"
+        ).textContent =
+
+            "Signature Verified: " +
+            result.signature_verified +
+
+            "\n\nSignature:\n" +
+
+            (
+                result.digital_signature
+                || "Not required by policy"
+            );
+
+
+        // ----------------------------------
+        // MONITORING
+        // ----------------------------------
+
+        document.getElementById(
+            "monitoring"
+        ).textContent =
+
+            JSON.stringify(
+                result.monitoring,
+                null,
+                2
+            );
+
+
+        // ----------------------------------
+        // STATS
+        // ----------------------------------
+
+        document.getElementById(
+            "riskValue"
+        ).textContent =
+            result.risk;
+
+
+        document.getElementById(
+            "encryptionValue"
+        ).textContent =
+            result.security_policy.encryption;
+
+
+        // Load actual risk score from
+        // backend if available
+
+        if (
+            result.risk_score !== undefined
+        ) {
+
+            document.getElementById(
+                "scoreValue"
+            ).textContent =
+                result.risk_score + "/100";
+
+        }
+
+
+        loadLogs();
+
+        loadKeys();
+
+    }
+
+
+    catch (error) {
+
+        alert(
+            "Error connecting to CryptoGuard:\n\n" +
+            error.message
+        );
+
+        console.error(error);
+
+    }
+
+}
+
+
+// ==========================================
+// LOAD LOGS
+// ==========================================
+
+async function loadLogs() {
+
+    try {
+
+        const response =
+            await fetch("/logs");
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to load logs."
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        document.getElementById(
+            "logs"
+        ).textContent =
+
+            JSON.stringify(
+                result,
+                null,
+                2
+            );
+
+
+        document.getElementById(
+            "eventValue"
+        ).textContent =
+            result.total_events;
+
+    }
+
+
+    catch (error) {
+
+        document.getElementById(
+            "logs"
+        ).textContent =
+
+            "Error loading security logs:\n\n" +
+            error.message;
+
+    }
+
+}
+
+
+// ==========================================
+// LOAD KEYS
+// ==========================================
+
+async function loadKeys() {
+
+    try {
+
+        const response =
+            await fetch("/keys");
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to load keys."
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        document.getElementById(
+            "keyInfo"
+        ).textContent =
+
+            JSON.stringify(
+                result,
+                null,
+                2
+            );
+
+    }
+
+
+    catch (error) {
+
+        document.getElementById(
+            "keyInfo"
+        ).textContent =
+
+            "Error loading keys:\n\n" +
+            error.message;
+
+    }
+
+}
+
+
+// ==========================================
+// ROTATE KEY
+// ==========================================
+
+async function rotateKey() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/keys/rotate",
+                {
+                    method: "POST"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to rotate key."
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        alert(
+            "Key rotation successful!\n\n" +
+            "New Key ID: " +
+            result.key_id
+        );
+
+
+        loadKeys();
+
+    }
+
+
+    catch (error) {
+
+        alert(
+            "Key rotation failed:\n\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// INITIAL LOAD
+// ==========================================
+
+loadLogs();
+
+loadKeys();
+
+
+</script>
+
+
+</body>
+
+</html>
